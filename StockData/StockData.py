@@ -4,7 +4,7 @@ import datetime
 
 stockToPull = 'AAPL', 'MSFT','GOOG', 'TSLA'
 
-test = 
+tests = 
 def pullData(stock):
     try:
         print 'Current pulling', stock
