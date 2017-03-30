@@ -1,7 +1,3 @@
-dependencies:
-  pre:
-  	- pip install urlib2
-  	- pip install time
-  	- pip install datetime
-
-  
+machine:
+    python:
+        version: 2.7.1
