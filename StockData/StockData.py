@@ -3,8 +3,7 @@ import time
 import datetime
 
 stockToPull = 'AAPL', 'MSFT','GOOG', 'TSLA'
-
-tests = 
+ 
 def pullData(stock):
     try:
         print 'Current pulling', stock
@@ -38,7 +37,6 @@ def pullData(stock):
     except Exception,e:
         print 'main loop', str(e)
 
-        test
 
 for eachStock in stockToPull:
     pullData(eachStock)
