@@ -3,7 +3,7 @@ import time
 import datetime
 
 stockToPull = 'AAPL', 'MSFT','GOOG', 'TSLA'
-test = 5+5
+test = 
 
 def pullData(stock):
     try:
