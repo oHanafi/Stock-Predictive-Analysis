@@ -3,9 +3,8 @@ import time
 import datetime
 
 stockToPull = 'AAPL', 'MSFT','GOOG', 'TSLA'
-test'  
 
-deff pullData(stoc):
+def pullData(stock):
     try:
         print 'Current pulling', stock
         print str(datetime.datetime.fromtimestamp(int(time.time())).strftime('%Y-%m-%d %H:%M-%S'))
@@ -30,7 +29,7 @@ deff pullData(stoc):
                     if int(splitLine[0]) > int(lastUnix):
                         lineToWrite = eachLine+'\n'
                         saveFile.write(lineToWrite)
-        saveFile.clos()        
+        saveFile.close()        
         print 'Pulled',stock
         print 'Sleeping'
         print str(datetime.datetime.fromtimestamp(int(time.time())).strftime('%Y-%m-%d %H:%M-%S'))
