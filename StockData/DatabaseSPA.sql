@@ -38,12 +38,13 @@ Constraint FK_Data
 );
 GO
 
-IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'spAddStock') 
-   DROP PROCEDURE spAddStock 
+IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'spAddData') 
+   DROP PROCEDURE spAddData 
 GO 
 
-CREATE PROCEDURE spAddStock
+CREATE PROCEDURE spAddData
 ( 
+   @Stock_ID	Integer,
    @Closing		Varchar(255),
    @High		Varchar(255),
    @Low		Varchar(255),
@@ -52,10 +53,6 @@ CREATE PROCEDURE spAddStock
 ) 
 AS 
 BEGIN 
-DECLARE @Stock_ID integer
-
-SELECT @Stock_ID = Max(Stock_ID)+1
-FROM Stock
 
 INSERT INTO Data(Stock_ID, Stock_Time, Closing,High,Low,Stock_Open,Volume)
 VALUES		(@Stock_ID, CURRENT_TIMESTAMp, @Closing, @High, @Low, @Open, @Volume)
