@@ -11,23 +11,24 @@ use DatabaseSPA
 go
 
 create table Stock (
-Stock_ID		Int,
-Short		Varchar(50) not null,
+Stock_ID		Int identity(1, 1),
+Short			Varchar(50) not null,
 Stock_Description Varchar(255),
 
 Constraint PK_Stock
 	primary key(Stock_ID)
 
 );
-
-create table Data (
+drop table [Data];
+create table [Data] (
 Stock_ID		Int,
-Stock_Time		Time,
+Stock_Time		BigInt,
 Closing		Varchar(255),
 High	 varchar(255),
 Low	 varchar(255),
 Stock_Open	 varchar(255),
 Volume	 varchar(255),
+Loggtime	datetime DEFAULT(GETDATE()),
 
 Constraint PK_Data
 	primary key(Stock_ID, Stock_Time),
