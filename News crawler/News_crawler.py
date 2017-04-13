@@ -7,17 +7,18 @@ from textblob import TextBlob
 x=0
 url = "https://news.google.com/news?pz=1&hl=en&tab=nn"
 html = urllib.urlopen(url).read()
-soup = BeautifulSoup(html)
+soup = BeautifulSoup(html, "html.parser")
 linklist = []
 #link = "http://www.bbc.com/news"
-for link in soup.find_all('a'):
-   link.get('href')
-   #linklist.append(link.get('href'))
+lijstje = soup.findAll('span', {"class" : "titletext"})
+for a in lijstje:
+   print a
+   
 
-searchCrit = 'Donald'
+
 
 for x in linklist:
-    if searchCrit in x:
+   # if searchCrit in x:
         print x
   
 
