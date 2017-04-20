@@ -58,6 +58,7 @@ Title			varchar(255),
 Article_Descr	text,
 Content			text,
 Author			varchar(255),
+Link			varchar(255),
 Post_Time		timestamp,
 Logg_Time		timestamp DEFAULT(getdate()),
 
@@ -79,4 +80,4 @@ Constraint FK_StockArticle_Stock
 Constraint FK_StockArticle_NewsArticle
 	foreign key (Article_ID)
 	references NewsArticle(Article_ID)
-);
+);l

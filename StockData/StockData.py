@@ -4,7 +4,7 @@ import datetime
 import pyodbc
 
 
-stockToPull = 'AAPL', 'MSFT','GOOG', 'TSLA'
+stockToPull = 'AAPL', 'MSFT','GOOG', 'TSLA', 'AMD', 'INTC','NVDA', 'QCOM', 'NXPI', 'ASML', 'HPQ'
 
 def pullData(stock):
     try:
@@ -42,7 +42,7 @@ def pullData(stock):
         urlToVisit = 'http://chartapi.finance.yahoo.com/instrument/1.0/'+stock+'/chartdata;type=quote;range=1d/csv'
         sourceCode = urllib2.urlopen(urlToVisit).read()
         splitSource = sourceCode.split('\n')
-        print "zone 3"
+
         for eachLine in splitSource:
             splitLine = eachLine.split(',')
             if len(splitLine) == 6:
@@ -76,3 +76,4 @@ while x < 0:
 
     print ("10 minute break \n")
     time.sleep(600)
+    
