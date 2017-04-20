@@ -10,10 +10,16 @@ html = urllib.urlopen(url).read()
 soup = BeautifulSoup(html, "html.parser")
 linklist = []
 #link = "http://www.bbc.com/news"
-lijstje = soup.findAll('span', {"class" : "titletext"})
+lijstje = soup.findAll('div', {"class" : "esc-body"})
 for a in lijstje:
-   print a
+   b = a.findAll('span', {"class" : "titletext"})
+   c = a.findAll('div', {"class" : "esc-lead-snippet-wrapper"})
    
+   #print a
+   print b
+   print c
+   print "\n"
+
 
 
 
