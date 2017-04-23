@@ -3,6 +3,33 @@ import json
 import urllib
 from bs4 import BeautifulSoup
 from textblob import TextBlob
+import feedparser
+
+
+python = "http://www.computerweekly.com/rss/IT-hardware.xml"
+print python
+feed = feedparser.parse(python)
+linklist = []
+for entry in feed.entries:
+   #if str(entry["description"]).find("data") != -1:
+    print entry["link"]
+    print str(entry["description"])
+    print "\n"
+    linklist.append(entry["link"])
+   #else:
+      #continue
+    
+print linklist
+
+htmllink = []
+
+for url in linklist:
+
+
+   html = urllib.urlopen(url).read()
+   soup = BeautifulSoup(html, "html.parser")
+   print soup.findAll('div', {"class" : "rev-content tab"})
+
 
 x=0
 url = "https://news.google.com/news?pz=1&hl=en&tab=nn"
@@ -16,21 +43,21 @@ for a in lijstje:
    c = a.findAll('div', {"class" : "esc-lead-snippet-wrapper"})
    
    #print a
-   print b
-   print c
-   print "\n"
+   #print b
+   #print c
+   #print "\n"
 
 
 
 
 for x in linklist:
    # if searchCrit in x:
-        print x
+        x = x
   
 
 # kill all script and style elements
 for script in soup(["script", "style"]):
-    script.extract()    # rip it out
+   script.extract()    # rip it out
 
 # get text
 text = soup.get_text()
