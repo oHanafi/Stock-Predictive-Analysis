@@ -5,6 +5,9 @@ from bs4 import BeautifulSoup
 from textblob import TextBlob
 import feedparser
 
+y = o
+while y >= 0:
+    y = y + 1
 
 python = "http://www.computerweekly.com/rss/IT-hardware.xml"
 print python
