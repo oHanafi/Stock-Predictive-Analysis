@@ -6,7 +6,13 @@ from textblob import TextBlob
 import feedparser
 import pytest
 
-llll
+def func(x):
+    return x + 1
+
+def test_answer():
+    assert func(3) == 5
+    
+
 
 python = "http://www.computerweekly.com/rss/IT-hardware.xml"
 print python
