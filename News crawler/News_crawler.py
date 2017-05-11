@@ -4,10 +4,9 @@ import urllib
 from bs4 import BeautifulSoup
 from textblob import TextBlob
 import feedparser
+import pytest
 
-y = o
-while y >= 0:
-    y = y + 1
+llll
 
 python = "http://www.computerweekly.com/rss/IT-hardware.xml"
 print python
