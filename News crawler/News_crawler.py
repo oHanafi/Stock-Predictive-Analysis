@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 from textblob import TextBlob
 import feedparser
 import pytest
- 
+lol =1
 python = "http://www.computerweekly.com/rss/IT-hardware.xml"
 print python
 def ophalen(link):
