@@ -6,8 +6,6 @@ from textblob import TextBlob
 import feedparser
 import pytest
  
-aap
-
 python = "http://www.computerweekly.com/rss/IT-hardware.xml"
 print python
 def ophalen(link):
@@ -15,6 +13,7 @@ def ophalen(link):
     linklist = []
     for entry in feed.entries:
            #if str(entry["description"]).find("data") != -1:
+            assert "www" in entry
             print entry["link"]
             print str(entry["description"])
             print "\n"
@@ -22,6 +21,8 @@ def ophalen(link):
            #else:
               #continue
     return linklist;
+
+
 
 
 print ophalen(python)
