@@ -13,7 +13,7 @@ def ophalen(link):
     linklist = []
     for entry in feed.entries:
            #if str(entry["description"]).find("data") != -1:
-            assert "www" in entry
+            assert "wwsssssw" in entry
             print entry["link"]
             print str(entry["description"])
             print "\n"
