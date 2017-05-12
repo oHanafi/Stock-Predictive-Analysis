@@ -5,29 +5,30 @@ from bs4 import BeautifulSoup
 from textblob import TextBlob
 import feedparser
 import pytest
-
-
-    
-
+ 
+aap
 
 python = "http://www.computerweekly.com/rss/IT-hardware.xml"
 print python
-feed = feedparser.parse(python)
-linklist = []
-for entry in feed.entries:
-   #if str(entry["description"]).find("data") != -1:
-    print entry["link"]
-    print str(entry["description"])
-    print "\n"
-    linklist.append(entry["link"])
-   #else:
-      #continue
-    
-print linklist
+def ophalen(link):
+    feed = feedparser.parse(link)
+    linklist = []
+    for entry in feed.entries:
+           #if str(entry["description"]).find("data") != -1:
+            print entry["link"]
+            print str(entry["description"])
+            print "\n"
+            linklist.append(entry["link"])
+           #else:
+              #continue
+    return linklist;
+
+
+print ophalen(python)
 
 htmllink = []
 
-for url in linklist:
+for url in ophalen(python):
 
 
    html = urllib.urlopen(url).read()
