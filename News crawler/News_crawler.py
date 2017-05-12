@@ -6,6 +6,9 @@ from textblob import TextBlob
 import feedparser
 import pytest
 lol =1
+
+loool
+
 python = "http://www.computerweekly.com/rss/IT-hardware.xml"
 print python
 def ophalen(link):
