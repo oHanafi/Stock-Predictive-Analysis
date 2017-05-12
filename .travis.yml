@@ -9,8 +9,5 @@ python:
 install:
 - pip install 
 
-<<<<<<< HEAD
 script: pytest
-=======
-script: test.py
->>>>>>> origin/master
+
