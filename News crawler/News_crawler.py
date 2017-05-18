@@ -5,68 +5,69 @@ from bs4 import BeautifulSoup
 from textblob import TextBlob
 import feedparser
 import pytest
-lol =1
+import pyodbc
 
-loool
-
-python = "http://www.computerweekly.com/rss/IT-hardware.xml"
-print python
 def ophalen(link):
     feed = feedparser.parse(link)
     linklist = []
     for entry in feed.entries:
-           #if str(entry["description"]).find("data") != -1:
-            assert "wwsssssw" in entry
+           if entry["description"].find("AMD") >= 0:
+            #assert "AMD" in entry
             print entry["link"]
-            print str(entry["description"])
+            print entry["description"]
             print "\n"
             linklist.append(entry["link"])
-           #else:
-              #continue
-    return linklist;
+           else:
+              continue
+    return linklist
 
 
 
-
-print ophalen(python)
+python = "http://www.marketwatch.com/investing/stock/amd/news"
+print ophalen(link = python)
 
 htmllink = []
 
-for url in ophalen(python):
-
-
-   html = urllib.urlopen(url).read()
-   soup = BeautifulSoup(html, "html.parser")
-   print soup.findAll('div', {"class" : "rev-content tab"})
-
+##for url in ophalen(python):
+##   html = urllib.urlopen(url).read()
+##   soup = BeautifulSoup(html, "html.parser")
+##   print soup.findAll('div', {"class" : "Cf"})
 
 x=0
-url = "https://news.google.com/news?pz=1&hl=en&tab=nn"
+url = python
 html = urllib.urlopen(url).read()
 soup = BeautifulSoup(html, "html.parser")
 linklist = []
 #link = "http://www.bbc.com/news"
-lijstje = soup.findAll('div', {"class" : "esc-body"})
-for a in lijstje:
-   b = a.findAll('span', {"class" : "titletext"})
-   c = a.findAll('div', {"class" : "esc-lead-snippet-wrapper"})
-   
+lijstje = soup.findAll('li', {"class" : "fnewsitem"})
+
+##a[start:end] # items start through end-1
+##a[start:]    # items start through the rest of the array
+##a[:end]      # items from the beginning through end-1
+##a[:]         # a copy of the whole array
+
+print(lijstje[0])
+print(str(lijstje[0]).find('='))
+
+##for links in lijstje:
+##    print(links.find("c"))
+##    print(links.get('<p>'))
+    
+##for a in lijstje:
+##    print a
+
+print len(lijstje)
    #print a
    #print b
    #print c
    #print "\n"
-
-
-
-
-for x in linklist:
-   # if searchCrit in x:
-        x = x
   
 
 # kill all script and style elements
 for script in soup(["script", "style"]):
    script.extract()    # rip it out
+
+
 
 # get text
 text = soup.get_text()
@@ -78,6 +79,7 @@ lines = (line.strip() for line in text.splitlines())
 chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
 # drop blank lines
 text = '\n'.join(chunk for chunk in chunks if chunk)
+
 
 
 wiki = TextBlob(text)
