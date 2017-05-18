@@ -46,13 +46,16 @@ lijstje = soup.findAll('li', {"class" : "fnewsitem"})
 ##a[:end]      # items from the beginning through end-1
 ##a[:]         # a copy of the whole array
 
-print(lijstje[0])
-print(str(lijstje[0]).find('='))
+for links in lijstje:
+    link = str(links)[int(str(links).find('/story')):]
+    link = link[:int(str(link).find('"'))]
+    if link:
+        print("www.marketwatch.com" + link)
+    #checken of in database staat en dan pas opslaan + analyse
 
-##for links in lijstje:
-##    print(links.find("c"))
-##    print(links.get('<p>'))
-    
+
+
+
 ##for a in lijstje:
 ##    print a
 
