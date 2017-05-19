@@ -51,6 +51,28 @@ for links in lijstje:
     link = link[:int(str(link).find('"'))]
     if link:
         print("www.marketwatch.com" + link)
+        html = urllib.urlopen("http://www.marketwatch.com" + link).read()
+        soup = BeautifulSoup(html, "html.parser")
+        Titel = soup.findAll('h1', {'id' : 'article-headline'})
+        Titel = str(Titel)[int(str(Titel).find('">'))+15:]
+        Titel = Titel[:int(str(Titel).find('</h1>'))-8]
+        #print Titel
+        
+        soup2 = BeautifulSoup(html, "html.parser")
+        for headline_tag in soup2.find_all('h1'):
+            print headline_tag.text
+        #Content = "".join(line.strip() for line in soup2.split("\n"))
+        Content = ""
+        for paragraph_tag in soup2.find_all('p'):
+            #print paragraph_tag.text
+            Content = Content + paragraph_tag.text
+
+        AnalyseThis = TextBlob(Content)
+        print (AnalyseThis.sentiment.polarity)
+
+       
+
+        print ("\n")
     #checken of in database staat en dan pas opslaan + analyse
 
 
