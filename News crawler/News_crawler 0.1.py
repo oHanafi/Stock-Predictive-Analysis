@@ -16,7 +16,12 @@ def connectDatabase():
         cursor.execute(querryString)
         data = cursor.fetchall()        
         return data
-
+def addToNews(title, content, author, link, post_time):
+        cnxn = pyodbc.connect('DRIVER={SQL Server};SERVER=localhost\SQLEXPRESS;DATABASE=ProjectSPA_2;UID=;PWD=')
+        cursor = cnxn.cursor()
+        cursor.execute("exec spAddNews '" & title & "', '" & content', 'jfa', 'jag', '1998-01-02 00:00:00.000'")
+        #MAAK SP HIERBOVEN EERST AF VOOR TOEVOEGEN ARTIKELEN
+        
 def companyList():
         companies = []
         for stock in connectDatabase():
@@ -55,17 +60,25 @@ def pullNews(stock):
                         #print paragraph_tag.text
                         Content = Content + paragraph_tag.text
 
+                    Content = Content[int(Content.find('By')) + 2:]
+                    Content = Content[:int(Content.find('Join the conversation'))]
+                
+                    Content = " ".join(Content.split())
+                    print(Content)
                     AnalyseThis = TextBlob(Content)
                     print ("Sentiment: " + str(AnalyseThis.sentiment.polarity))
                     PolaritySum = PolaritySum + AnalyseThis.sentiment.polarity
 
                     # The article has to be placed in the database for version 0.2.
                     print ("\n")
+                    print ("=====================================================")
+                    print ("\n")
     print PolaritySum/80
 x = -10
 while x < 0:
-    for eachStock in stockToPull:
+    for eachStock in companyList():
         pullNews(eachStock)
+        
 
     print ("10 minute break \n")
     time.sleep(600)

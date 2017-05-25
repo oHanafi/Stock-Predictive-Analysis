@@ -55,12 +55,11 @@ GO
 create table NewsArticle(
 Article_ID		int identity(1, 1),
 Title			varchar(255),
-Article_Descr	text,
 Content			text,
 Author			varchar(255),
 Link			varchar(255),
-Post_Time		smalldatetime,
-Logg_Time		smalldatetime,
+Post_Time		datetime,
+Logg_Time		datetime,
 
 Constraint PK_NewsArticle
 	primary key(Article_ID)
@@ -105,30 +104,31 @@ CREATE PROCEDURE spAddNews
 ( 
    --@Article_ID	Integer,
    @Title		Varchar(255),
-   @Article_Descr	Varchar(255),
    @Content		Varchar(255),
    @Author		Varchar(255),
    @Link		Varchar(255),
-   @Post_Time	smalldatetime
-   --@Logg_Time	smalldatetime
+   @Post_Time	datetime
+   --@Logg_Time	datetime
 
 ) 
 AS 
-BEGIN 
-
-INSERT INTO NewsArticle(Title, Article_Descr, Content, Author, Link, Post_Time, Logg_Time)
-VALUES		(@Title, @Article_Descr, @Content, @Author, @Link, @Post_Time, getdate())
+BEGIN
+BEGIN TRANSACTION
+INSERT INTO NewsArticle(Title, Content, Author, Link, Post_Time, Logg_Time)
+VALUES		(@Title, @Content, @Author, @Link, @Post_Time, getdate())
 
 
 
 IF @@ERROR <> 0
-		BEGIN TRANSACTION
-
+	BEGIN 
+   
 		ROLLBACK 
+ 
 		RAISERROR ('Er is een fout opgetreden.', 16, 1) 
 		RETURN 
-	COMMIT
+	END 
 
+COMMIT	
 END
 GO
 
