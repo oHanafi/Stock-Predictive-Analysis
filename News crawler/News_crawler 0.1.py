@@ -7,6 +7,7 @@ import feedparser
 import pytest
 import pyodbc
 import sys
+import re
 
 # List with stocks. This has to be replaced with a database request for version 0.2.
 stockToPull = 'AAPL', 'MSFT','GOOG', 'TSLA', 'AMD', 'INTC','NVDA', 'QCOM', 'NXPI', 'ASML', 'HPQ'
@@ -42,6 +43,14 @@ def pullNews(stock):
             soup = BeautifulSoup(html, "html.parser")
             
             listNews = soup.findAll('li', {"class" : "fnewsitem"})
+            listWriters = soup.findAll('p', {"class" : "source"})
+            
+            try:
+                                            
+                    script = re.search('<p class="source">', listWriters[).group(1)
+                    
+            
+            print listWriters
 
             PolaritySum = 0
             for links in listNews:
@@ -69,8 +78,8 @@ def pullNews(stock):
                     Content = Content[:int(Content.find('Join the conversation'))]
                 
                     Content = " ".join(Content.split())
-                    #print(Content)
-                    addToNews(title, Content, 'ja' ,'ja', '2014/12/20 10:12:30')
+                    print(Content)
+                    #addToNews(title, Content, 'ja' ,'ja', '2014/12/20 10:12:30')
                     AnalyseThis = TextBlob(Content)
                     print ("Sentiment: " + str(AnalyseThis.sentiment.polarity))
                     PolaritySum = PolaritySum + AnalyseThis.sentiment.polarity
