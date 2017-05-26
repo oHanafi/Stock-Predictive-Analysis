@@ -6,6 +6,7 @@ from textblob import TextBlob
 import feedparser
 import pytest
 import pyodbc
+import sys
 
 # List with stocks. This has to be replaced with a database request for version 0.2.
 stockToPull = 'AAPL', 'MSFT','GOOG', 'TSLA', 'AMD', 'INTC','NVDA', 'QCOM', 'NXPI', 'ASML', 'HPQ'
@@ -14,13 +15,16 @@ def connectDatabase():
         cursor = cnxn.cursor()
         querryString = "SELECT Short FROM Stock"
         cursor.execute(querryString)
-        data = cursor.fetchall()        
+        data = cursor.fetchall()
+        cursor.close()
         return data
+
 def addToNews(title, content, author, link, post_time):
         cnxn = pyodbc.connect('DRIVER={SQL Server};SERVER=localhost\SQLEXPRESS;DATABASE=ProjectSPA_2;UID=;PWD=')
         cursor = cnxn.cursor()
-        cursor.execute("exec spAddNews '" & title & "', '" & content', 'jfa', 'jag', '1998-01-02 00:00:00.000'")
-        #MAAK SP HIERBOVEN EERST AF VOOR TOEVOEGEN ARTIKELEN
+        cursor.execute("exec spAddNews '" + title + "', '" + content + "', '" + author + "', '" + link + "', '" + post_time + "'")
+        cursor.commit()
+        cursor.close()
         
 def companyList():
         companies = []
@@ -50,9 +54,10 @@ def pullNews(stock):
                     link = "http://www.marketwatch.com" + link
                     print(link)
                     html = urllib.urlopen(link).read()
-                    
+                    Title = ""
                     soup2 = BeautifulSoup(html, "html.parser")
                     for headline_tag in soup2.find_all('h1'):
+                        title = headline_tag.text
                         print headline_tag.text
                         
                     Content = ""
@@ -64,7 +69,8 @@ def pullNews(stock):
                     Content = Content[:int(Content.find('Join the conversation'))]
                 
                     Content = " ".join(Content.split())
-                    print(Content)
+                    #print(Content)
+                    addToNews(title, Content, 'ja' ,'ja', '2014/12/20 10:12:30')
                     AnalyseThis = TextBlob(Content)
                     print ("Sentiment: " + str(AnalyseThis.sentiment.polarity))
                     PolaritySum = PolaritySum + AnalyseThis.sentiment.polarity

@@ -98,18 +98,17 @@ INSERT INTO STOCK(Short, Stock_Desc) VALUES ('HPQ', 'HP INC.');
 
 IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'spAddNews') 
    DROP PROCEDURE spAddNews 
-GO 
+GO
 
 CREATE PROCEDURE spAddNews
 ( 
    --@Article_ID	Integer,
    @Title		Varchar(255),
-   @Content		Varchar(255),
+   @Content		text,
    @Author		Varchar(255),
    @Link		Varchar(255),
    @Post_Time	datetime
    --@Logg_Time	datetime
-
 ) 
 AS 
 BEGIN
@@ -140,7 +139,6 @@ CREATE PROCEDURE spNewsToStock
 ( 
    @Article_ID	Integer,
    @Stock_ID	Integer
-
 ) 
 AS 
 BEGIN 
