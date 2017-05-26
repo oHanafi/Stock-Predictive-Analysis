@@ -54,6 +54,7 @@ def pullNews(stock):
 ##                    print(writer)
 
             PolaritySum = 0
+            #Er wordt voor elke link het artikel, titel, link, schrijver, post tijd en ophaaltijd opgehaald.
             for links in listNews:
                 link = str(links)[int(str(links).find('/story')):]
                 link = link[:int(str(link).find('"'))]
@@ -70,10 +71,7 @@ def pullNews(stock):
                     for headline_tag in soup2.find_all('h1'):
                         Title = headline_tag.text
                         print headline_tag.text
-
-##                    for author_tag in soup2.find_all('module-header'):
-##                        Author = author_tag.text
-##                        print author_tag.text    
+  
 
                     listWriters = soup2.findAll('h3', {"class" : "module-header"})
                     Author = ""
@@ -86,11 +84,6 @@ def pullNews(stock):
                             else:
                                     continue
 
-                
-                    
-                    
-
-                    
                     if Author:
                             Author = Author[int(Author.find('>'))+1:]
                             Author = Author[:int(Author.find('</b>'))]
@@ -109,21 +102,21 @@ def pullNews(stock):
                                         Author = Author[:Author.index("<")]
                                         break
 
-                                
-                    print Author            
-                                
-                
                     Content = ""
                     for paragraph_tag in soup2.find_all('p'):
                         #print paragraph_tag.text
                         Content = Content + paragraph_tag.text
 
+                    Posting = ""
+                    Posting = Content[:int(Content.find('a.m.' or 'p.m.')) + 4]
                     Content = Content[int(Content.find('By')) + 2:]
                     Content = Content[:int(Content.find('Join the conversation'))]
+                    print Posting
+                    
                 
                     Content = " ".join(Content.split())
                     #print(Content)
-                    #addToNews(Title, Content, 'ja' ,'ja', '2014/12/20 10:12:30')
+                    addToNews(Title, Content, Author , link, '2014/12/20 10:12:30')
                     AnalyseThis = TextBlob(Content)
                     print ("Sentiment: " + str(AnalyseThis.sentiment.polarity))
                     PolaritySum = PolaritySum + AnalyseThis.sentiment.polarity

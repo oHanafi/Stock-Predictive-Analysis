@@ -114,7 +114,7 @@ AS
 BEGIN
 BEGIN TRANSACTION
 INSERT INTO NewsArticle(Title, Content, Author, Link, Post_Time, Logg_Time)
-VALUES		(@Title, @Content, @Author, @Link, @Post_Time, getdate())
+VALUES		(char(@Title), char(@Content), @Author, @Link, @Post_Time, getdate())
 
 
 
