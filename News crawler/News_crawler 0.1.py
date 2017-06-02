@@ -1,3 +1,4 @@
+# -*- coding: cp1252 -*-
 import requests
 import json
 import urllib
@@ -8,6 +9,7 @@ import pytest
 import pyodbc
 import sys
 import re
+from datetime import datetime
 
 # List with stocks. This has to be replaced with a database request for version 0.2.
 stockToPull = 'AAPL', 'MSFT','GOOG', 'TSLA', 'AMD', 'INTC','NVDA', 'QCOM', 'NXPI', 'ASML', 'HPQ'
@@ -77,24 +79,26 @@ def pullNews(stock):
                     Author = ""
 
                     for module in listWriters:
-                            if str(module).count("href") == 0 and str(module).count("Bulletin") == 0 and str(module).count("References") == 0 and str(module).count("Popular") == 0 and str(module).count("Partner Center") == 0:
+                            if str(module).count("href") == 0 and str(module).count("countdown") == 0 and str(module).count("Bulletin") == 0 and str(module).count("References") == 0 and str(module).count("Popular") == 0 and str(module).count("Partner Center") == 0:
                                     Author = str(module)
                                     
                                     break
                             else:
                                     continue
-
                     if Author:
                             Author = Author[int(Author.find('>'))+1:]
-                            Author = Author[:int(Author.find('</b>'))]
-                            Author = " ".join(Author.split())
-                            Author = Author[:Author.index("<")]+ " " + Author[Author.index(">")+1:]
-                            
+                            Author = Author.replace('<b>', ' ')
+                            Author = Author.replace('</b>', '')
+                            Author = Author.replace('</h3>', '')
+                            print Author
+                            Author = re.sub(' +', ' ',Author)
+                            print Author
                     else:
                             Author = "Press release"
                             
                     if Author == "Press release":
-                            for par in soup2.find_all('p'):
+                        print ("HALLO   :   " + str(soup2.find('<footer')))
+                        for par in soup2.find_all('p'):
                                 #print paragraph_tag.text
                                 if str(par).count("SOURCE") == 1:                                    
                                         Author = str(par)[str(par).index("SOURCE")+7:]
@@ -115,9 +119,23 @@ def pullNews(stock):
                     
                 
                     Content = " ".join(Content.split())
+                    #print Content
                     #print(Content)
-                    addToNews(Title, Content, Author , link, '2014/12/20 10:12:30')
                     AnalyseThis = TextBlob(Content)
+                    Title = Title.replace("'", "#sq#")
+                    Title = Title.replace('"', '#dq#')
+                    Content = Content.replace("'", "#sq#")
+                    Content = Content.replace('"', '#dq#')
+                    #Content = Content.replace('%', '#per#')
+                    #Content = Content.replace('©', '#cr#')
+                    Posting = Posting.replace("Published: ", "")
+                    Posting = Posting.replace(",", "")
+                    Posting = Posting.replace(".", "")
+                    Posting = Posting.replace(" am", "AM")
+                    Posting = Posting.replace(" pm", "PM")
+
+                    print datetime.strptime(Posting, '%B %d %Y %I:%M%p')
+                    addToNews(Title, Content, Author , link, '2014/12/20 10:12:30')
                     print ("Sentiment: " + str(AnalyseThis.sentiment.polarity))
                     PolaritySum = PolaritySum + AnalyseThis.sentiment.polarity
 
