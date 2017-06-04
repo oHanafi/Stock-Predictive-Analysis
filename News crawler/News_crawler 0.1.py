@@ -119,7 +119,7 @@ def pullNews(stock):
                     
                 
                     Content = " ".join(Content.split())
-                    #print Content
+                    print Content
                     #print(Content)
                     AnalyseThis = TextBlob(Content)
                     Title = Title.replace("'", "#sq#")
@@ -133,12 +133,13 @@ def pullNews(stock):
                     Posting = Posting.replace(".", "")
                     Posting = Posting.replace(" am", "AM")
                     Posting = Posting.replace(" pm", "PM")
-
-                    print datetime.strptime(Posting, '%B %d %Y %I:%M%p')
-                    addToNews(Title, Content, Author , link, '2014/12/20 10:12:30')
                     print ("Sentiment: " + str(AnalyseThis.sentiment.polarity))
                     PolaritySum = PolaritySum + AnalyseThis.sentiment.polarity
 
+
+                    print datetime.strptime(Posting, '%B %d %Y %I:%M%p')
+                    #addToNews(Title, Content, Author , link, '2014/12/20 10:12:30')
+                    
                     # The article has to be placed in the database for version 0.2.
                     print ("\n")
                     print ("=====================================================")
