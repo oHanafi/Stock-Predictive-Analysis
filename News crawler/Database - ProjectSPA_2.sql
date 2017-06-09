@@ -108,13 +108,12 @@ CREATE PROCEDURE spAddNews
    @Author		Varchar(255),
    @Link		Varchar(255),
    @Post_Time	datetime
-   --@Logg_Time	datetime
 ) 
 AS 
 BEGIN
 BEGIN TRANSACTION
 INSERT INTO NewsArticle(Title, Content, Author, Link, Post_Time, Logg_Time)
-VALUES		(char(@Title), char(@Content), @Author, @Link, @Post_Time, getdate())
+VALUES		(@Title, @Content, @Author, @Link, @Post_Time, getdate())
 
 
 

@@ -12,7 +12,7 @@ import re
 import csv
 import goslate 
                 
-gs = goslate.Goslate()
+
 def pullNews():
 
    
@@ -57,58 +57,11 @@ def pullNews():
                                 com = com.replace("\n\t\t\t\t\t\n\t\t\t\t</div>", " ")
                                 com = " ".join(com.split())
                                 #print com
-                        lijstje2 = []
-                        print(gs.detect("jij bent mooi"))
-                        sys.exit()
-
-                        for com in lijstje:
-                                    
                                 print ("\n")
                                 print ("=====================================================")
                                 print ("\n")
-                                #x = x + 1
-                                    
-                                print(type(com))
-                                PolaritySum = TextBlob(com).sentiment.polarity
-                                Subjectivity = TextBlob(com).sentiment.subjectivity
-                                lijstje.append(com)
-                                translate = gs.translate(com, 'en')
-                                print(com)
-                                print (gs.detect(com))
-
-                                    
-                        for j in lijstje:
-                                j = gs.translate(j, 'nl')
-
-                                lijstje2.append(j)
-
-                        #print lijstje2
-                                
-
-
+                                print com
                         
-
-                        sys.exit()
-
-                        with open('Stats.csv', 'w') as csvfile:
-                            fieldnames = ['Comment', 'Polarity', 'Subjectivity']
-                            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-                            writer.writeheader()
-                            x = 0
-                            for com in lijstje:
-                                    
-                                    print ("\n")
-                                    print ("=====================================================")
-                                    print ("\n")
-                                    x = x + 1
-                                    
-                                
-                                    PolaritySum =TextBlob('Stupid').sentiment.polarity
-                                    Subjectivity = TextBlob(str(com)).sentiment
-                                    print com
-                                    print PolaritySum
-                                    print Subjectivity
-                                    writer.writerow({'Comment': x, 'Polarity': PolaritySum, 'Subjectivity' : Subjectivity})
 
                             
                             
@@ -117,9 +70,10 @@ def pullNews():
                         
                         
 
-x = -10
-while x < 0:
+x = 0
+while x < 1:
     pullNews()
+    x = x+1
         
 
     

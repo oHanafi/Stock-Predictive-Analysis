@@ -29,6 +29,9 @@ def addToNews(title, content, author, link, post_time):
         cursor.commit()
         cursor.close()
         
+def replace_index(text,index=0,replacement=''):
+    return '%s%s%s'%(text[:index],replacement,text[index+1:])
+
 def companyList():
         companies = []
         for stock in connectDatabase():
@@ -64,6 +67,8 @@ def pullNews(stock):
                 # Database has to be checked if link is existing for version 0.2.
                 
                 if link: # Check if link is not empty
+        
+
                     link = "http://www.marketwatch.com" + link
                     print(link)
                     html = urllib.urlopen(link).read()
@@ -97,7 +102,7 @@ def pullNews(stock):
                             Author = "Press release"
                             
                     if Author == "Press release":
-                        print ("HALLO   :   " + str(soup2.find('<footer')))
+                        
                         for par in soup2.find_all('p'):
                                 #print paragraph_tag.text
                                 if str(par).count("SOURCE") == 1:                                    
@@ -110,16 +115,30 @@ def pullNews(stock):
                     for paragraph_tag in soup2.find_all('p'):
                         #print paragraph_tag.text
                         Content = Content + paragraph_tag.text
-
+                    #print Content
                     Posting = ""
-                    Posting = Content[:int(Content.find('a.m.' or 'p.m.')) + 4]
+                    Posting = soup2.findAll('p', {"id" : "published-timestamp"})
+                    print Posting
+                    pos = re.search("<span>", str(Posting))
+                    if pos.start():
+                            print pos.start()
+                    else:
+                            print "missing"
+                    Posting = str(Posting)[pos.start() + 6:]
+                    print Posting
+                    pos = re.search("</span>", str(Posting))
+                    Posting = str(Posting)[:pos.start()-3]
+                    print Posting
+                    
+
                     Content = Content[int(Content.find('By')) + 2:]
                     Content = Content[:int(Content.find('Join the conversation'))]
-                    print Posting
+                    #print "This is the time:  " + Posting
+                    
                     
                 
                     Content = " ".join(Content.split())
-                    print Content
+                    #print Content
                     #print(Content)
                     AnalyseThis = TextBlob(Content)
                     Title = Title.replace("'", "#sq#")
@@ -133,12 +152,46 @@ def pullNews(stock):
                     Posting = Posting.replace(".", "")
                     Posting = Posting.replace(" am", "AM")
                     Posting = Posting.replace(" pm", "PM")
+                    Posting = Posting.replace("Apr", "April")
+                    Posting = Posting.replace("Mar", "March")
+                    Posting = Posting.replace("Jan", "January")
+                    Posting = Posting.replace("Feb", "February")
+                    
+                    
+                    Posting = Posting.replace("Aug", "August")
+                    Posting = Posting.replace("Sept", "September")
+                    Posting = Posting.replace("Oct", "October")
+                    Posting = Posting.replace("Nov", "November")
+                    Posting = Posting.replace("Dec", "December")
+                    print Posting
+                    #print "This is: " + Posting
+                    pos = re.search("\d", Posting)
+                    print Posting[pos.start()]
+                    print Posting[pos.start()-1]
+                    print Posting[pos.start()+1]
+                    if pos:
+                            if str(Posting)[pos.start() - 1] == " " and str(Posting)[pos.start() + 1] == " ": 
+                                    Posting = str(Posting)[:int(pos.start())] + Posting[pos.start()].zfill(2) + " " + Posting[int(pos.start()) + 2:]
+                    
+                    print  Posting
+
+                    pos = re.search(":", Posting) 
+                    print Posting
+                    if pos:
+                            if str(Posting)[pos.start() - 2] == " ":               
+                                    Posting = str(Posting)[:int(pos.start() - 1)] + str(Posting)[pos.start() - 1].zfill(2) + str(Posting)[int(pos.start()):]
+                    print Posting
+                    pos1 = re.search("a.m." or "p.m.", Posting)
+                    
+                    
+                    
+                    #print "This is the 2nd: " + Posting
                     print ("Sentiment: " + str(AnalyseThis.sentiment.polarity))
                     PolaritySum = PolaritySum + AnalyseThis.sentiment.polarity
 
 
-                    print datetime.strptime(Posting, '%B %d %Y %I:%M%p')
-                    #addToNews(Title, Content, Author , link, '2014/12/20 10:12:30')
+                    print datetime.strptime(str(Posting), "%B %d %Y %I:%M%p")
+                    addToNews(Title, Content, Author , link, Posting)
                     
                     # The article has to be placed in the database for version 0.2.
                     print ("\n")
@@ -148,9 +201,12 @@ def pullNews(stock):
 x = -10
 while x < 0:
     for eachStock in companyList():
-        pullNews(eachStock)
-        
-
-    print ("10 minute break \n")
+        try:
+                pullNews(eachStock)
+        except ValueError:
+                print "Error occurred"
+        except AttributeError:
+                print "Attribute error occurred."
+    print "10 minute break \n"
     time.sleep(600)
     
