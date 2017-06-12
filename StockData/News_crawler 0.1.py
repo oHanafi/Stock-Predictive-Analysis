@@ -2,6 +2,7 @@
 import requests
 import json
 import urllib
+import urllib2 
 from bs4 import BeautifulSoup
 from textblob import TextBlob
 import feedparser
@@ -228,17 +229,44 @@ def pullNews(stock):
                                     print ("\n")
                                     print ("=====================================================")
                                     print ("\n")
+
         except: 
                 pass
+def fetchMarket(symbol):
+        try:
+
+                cnxn = pymssql.connect( server='85.214.62.99', user='Excel', password='ibbeltje', database='ProjectSPA')
+                cursor = cnxn.cursor()
+                querryString = "SELECT stock_id FROM [Stock] WHERE Short = '" + symbol + "'"
+                stockID = cursor.execute(querryString)
+                row = cursor.fetchone()
+                while row:
+                    StockID = (row[0])
+                    row = cursor.fetchone()
+                link = ("http://finance.google.com/finance/info?q=")
+                url = link+"%s" % (symbol)
+                u = urllib2.urlopen(url)
+                content = u.read()
+                data = json.loads(content[3:])
+                info = data[0]
+                t = str(info["lt"])    
+                l = str(info["l"])    
+                print symbol,t,l
+                string = ("insert into [StockData](Stock_ID,Stock_Time,Closing) values(%d, %s, %s)")
+                cursor.execute(string,(StockID,str(datetime.now()),str(l)))
+                cnxn.commit()
+                time.sleep(1)
+                
+        except: 
+                pass
+
+      
 x = -10
 while x < 0:
+        
     for eachStock in companyList():
-##        try:
-          pullNews(eachStock)
-##        except ValueError:
-##                print "Error occurred"
-##        except AttributeError:
-##                print "Attribute error occurred."
-    print "10 minute break \n"
-    time.sleep(600)
+        fetchMarket(eachStock)
+        pullNews(eachStock)
+
+    time.sleep(60)
     
