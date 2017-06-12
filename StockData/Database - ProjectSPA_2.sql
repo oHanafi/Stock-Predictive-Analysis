@@ -1,13 +1,13 @@
 use master;
 
-if db_id('ProjectSPA_2') is not null
-  drop database ProjectSPA_2; 
+if db_id('ProjectSPA') is not null
+  drop database ProjectSPA; 
 go
 
-create DATABASE ProjectSPA_2
+create DATABASE ProjectSPA
 go
 
-use ProjectSPA_2
+use ProjectSPA
 go
 
 create table Stock (
@@ -35,13 +35,9 @@ Constraint FK_Stock_ID
 
 create table StockData (
 Stock_ID		int,
-Stock_Time		bigint,
+Stock_Time		varchar(255),
 Closing			varchar(255),
-High			varchar(255),
-Low				varchar(255),
-Stock_Open		varchar(255),
-Volume			varchar(255),
-Loggtime		datetime DEFAULT(getdate()),
+
 
 Constraint PK_Data
 	primary key(Stock_ID, Stock_Time),
