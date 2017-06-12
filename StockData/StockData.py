@@ -28,7 +28,8 @@ def fetchMarket(symbol):
                 data = json.loads(content[3:])
                 info = data[0]
                 t = str(info["lt"])    
-                l = str(info["l"])    
+                l = str(info["l"])
+                print t,l
 
                 string = ("insert into [StockData](Stock_ID,Stock_Time,Closing) values(%d, %s, %s)")
                 cursor.execute(string,(StockID,str(datetime.datetime.now()),str(l)))

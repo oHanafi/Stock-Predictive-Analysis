@@ -257,7 +257,7 @@ def fetchMarket(symbol):
                 string = ("insert into [StockData](Stock_ID,Stock_Time,Closing) values(%d, %s, %s)")
                 cursor.execute(string,(StockID,str(datetime.now()),str(l)))
                 cnxn.commit()
-                time.sleep(1)
+                time.sleep(60)
                 
         except: 
                 pass
