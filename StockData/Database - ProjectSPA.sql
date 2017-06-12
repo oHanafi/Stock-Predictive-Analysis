@@ -36,7 +36,7 @@ Constraint FK_Stock_ID
 create table StockData (
 Stock_ID		int,
 Stock_Time		varchar(255),
-Closing			varchar(255)
+Closing			varchar(255),
 
 Constraint PK_Data
 	primary key(Stock_ID, Stock_Time),
@@ -60,7 +60,7 @@ Polarity		decimal(3,2),
 Subjectivity	decimal(3,2),
 
 Constraint PK_NewsArticle
-	primary key(Article_ID, Stock_ID),
+	primary key(Article_ID, Stock_ID,Link),
 
 Constraint FK_Stock_Article
 	foreign key(Stock_ID)

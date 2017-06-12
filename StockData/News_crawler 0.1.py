@@ -229,6 +229,7 @@ def pullNews(stock):
                                     print ("\n")
                                     print ("=====================================================")
                                     print ("\n")
+                                fetchMarket(eachStock)
 
         except: 
                 pass
@@ -265,7 +266,6 @@ x = -10
 while x < 0:
         
     for eachStock in companyList():
-        fetchMarket(eachStock)
         pullNews(eachStock)
 
     time.sleep(60)
