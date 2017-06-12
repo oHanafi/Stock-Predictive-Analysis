@@ -229,7 +229,8 @@ def pullNews(stock):
                                     print ("\n")
                                     print ("=====================================================")
                                     print ("\n")
-                                fetchMarket(eachStock)
+                                    for eachStock in companyList():   
+                                        fetchMarket(eachStock)
 
         except: 
                 pass
