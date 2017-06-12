@@ -4,7 +4,7 @@ import datetime
 import pyodbc
 import json
 
-
+from time import gmtime, strftime
 stockToPull = ['AAPL', 'MSFT','GOOG', 'TSLA', 'AMD', 'INTC','NVDA', 'QCOM', 'NXPI', 'ASML', 'HPQ']
 
 def fetchMarket(symbol):         
@@ -14,7 +14,6 @@ def fetchMarket(symbol):
         querryString = "SELECT stock_id FROM [Stock] WHERE Short = '" + symbol + "'"
         stockID = cursor.execute(querryString).fetchone()[0]    
 
-        print (stockID)
         link = ("http://finance.google.com/finance/info?q=")
         url = link+"%s" % (symbol)
         u = urllib2.urlopen(url)
@@ -23,13 +22,14 @@ def fetchMarket(symbol):
         info = data[0]
         t = str(info["lt"])    
         l = str(info["l"])    
-       
-        cursor.execute("insert into [Data] values(" + str(stockID) + "," + str(t) + ",'" + str(l) + "','" + str(0) + "','" + str(0) + "','" + str(0) + "','" + str(0) + "'," +str(0)+")")
-        cnxn.commit()
-                
+        print t
+        string = ("insert into [data](Stock_ID,Stock_Time,Closing) values("+str(stockID)+","+str(datetime.datetime.now().date())+","+str(l)+")")
+        cursor.execute(string)
 
-for i in stockToPull:
-    print (i)
-    fetchMarket(i)
-time.sleep(60)
+
+while True:
+        for i in stockToPull:
+            print (i)
+            fetchMarket(i)
+        time.sleep(60)
     
