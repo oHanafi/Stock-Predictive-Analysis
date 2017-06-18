@@ -269,5 +269,3 @@ while x < 0:
     for eachStock in companyList():
         pullNews(eachStock)
 
-    time.sleep(60)
-    
