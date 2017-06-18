@@ -13,6 +13,7 @@ import re
 import datetime
 from datetime import datetime
 import pymssql
+import time
 
 # List with stocks. This has to be replaced with a database request for version 0.2.
 stockToPull = 'AAPL', 'MSFT','GOOG', 'TSLA', 'AMD', 'INTC','NVDA', 'QCOM', 'NXPI', 'ASML', 'HPQ'
