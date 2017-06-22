@@ -28,6 +28,7 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+
 body {
 	line-height: 1;
 	font-family: arial;
@@ -138,8 +139,14 @@ header h1 span{
 	font-size: 30px;
 	color: #2a676b;
 }
+.chart-area {
+	
+	
+}
 .specific {
 	margin: 2%;
 	width: 60%;
 	float: left;
+	
+
 }
