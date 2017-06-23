@@ -15,6 +15,10 @@
     $conn = sqlsrv_connect($serverName, $connectionOptions);
 		
 ?>
+<script type="text/javascript">
+
+
+</script>
 </head>
 <body>
 	<header>
@@ -76,20 +80,22 @@ $totaal = 0;
 				}
 				
 				if (is_nan($nieuws)){
-				$advies = (0.6 * $avg + 0.4 * $huidig);
+				$advies = (0.3 * $avg + 0.7 * $huidig);
 				}else{
-				$advies = ((0.4 * $nieuws) * $avg + ((1-(0.4*$nieuws)) * $huidig));
+				$advies = ((0.6 * $nieuws) * $avg + ((1-(0.4*$nieuws)) * $huidig));
 				}
 			
-				
-		echo '<article class="stock-advise">';
-		if ($advies < $huidig){
-		echo '<img src="PijlNeg.png"height="36" width="36" id="pijl">'."<br />";
+		$stock = $row['short'];	
+		echo '<article class="stock-advise">'
+		echo '<a href=.."'.$stock.'">'
+		if ($huidig < $advies){
+		echo '<img src="PijlPos.png"height="36" width="36" id="pijl">'."<br />";
 		}else{
 		echo '<img src="PijlNeg.png"height="36" width="36" id="pijl">'."<br />";
 		}
 		echo "<p>".$row['short']."</p>"."<br />";
 		echo "<p>".$row['closing']."</p>"."<br />";
+		echo </a>
 		echo '</article>';
 			
           
@@ -102,6 +108,7 @@ sqlsrv_free_stmt( $stmt2);
 	
 		<div class="specific">
 			<div class="chart-area">
+			<iframe width="1200" height="800" src="https://app.powerbi.com/view?r=eyJrIjoiMWNhMWEyMDYtODI0Mi00YzNmLTg0NDAtMjEwYTgyZGIyZjdiIiwidCI6ImM2NmI2NzY1LWI3OTQtNGEyYi04NGVkLTg0NWIzNDFjMDg2YSIsImMiOjh9" frameborder="0" allowFullScreen="false" id="fram"></iframe>
 			</div>
 			<div class="newsarticles">
 				<article></article>
