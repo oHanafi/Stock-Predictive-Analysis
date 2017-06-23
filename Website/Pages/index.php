@@ -108,8 +108,7 @@ sqlsrv_free_stmt( $stmt2);
 	
 		<div class="specific">
 			<div class="chart-area">
-			<iframe width="1200" height="800" src="https://app.powerbi.com/view?r=eyJrIjoiMWNhMWEyMDYtODI0Mi00YzNmLTg0NDAtMjEwYTgyZGIyZjdiIiwidCI6ImM2NmI2NzY1LWI3OTQtNGEyYi04NGVkLTg0NWIzNDFjMDg2YSIsImMiOjh9" frameborder="0" allowFullScreen="false" id="fram"></iframe>
-			</div>
+			<iframe width="1200" height="800" src="https://app.powerbi.com/view?r=eyJrIjoiZTZhNzQ5NjctNDI2OS00MDlhLWIyYTItMjE3NDI4ODk5NjJiIiwidCI6ImM2NmI2NzY1LWI3OTQtNGEyYi04NGVkLTg0NWIzNDFjMDg2YSIsImMiOjh9" frameborder="0" allowFullScreen="true"></iframe></div>
 			<div class="newsarticles">
 				<article></article>
 				<article></article>
